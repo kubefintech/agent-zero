@@ -18,6 +18,7 @@ class Message(ApiHandler):
         result = await task.result()  # type: ignore
         return {
             "message": result,
+            "type": "markdown",
             "context": context.id,
         }
 
