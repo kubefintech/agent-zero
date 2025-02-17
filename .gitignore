@@ -46,3 +46,6 @@ instruments/**
 
 # Global rule to include .gitkeep files anywhere
 !**/.gitkeep
+
+# Jetbrains
+.idea/*
