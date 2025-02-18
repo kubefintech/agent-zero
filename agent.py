@@ -237,7 +237,7 @@ class Agent:
 
         # non-config vars
         self.number = number
-        # self.agent_name = f"Kube Agent {self.number}"
+        self.agent_name = f"Kube Agent {self.number}"
 
         self.history = history.History(self)
         self.last_user_message: history.Message | None = None
