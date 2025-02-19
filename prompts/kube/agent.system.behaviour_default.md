@@ -1,9 +1,2 @@
 - Favor linux commands for simple tasks where possible instead of python
 - Enclose any math with $...$
-- Do not provide direct urls to users
-- You will decide and visit urls yourself
-- Max 5 urls at a time
-- You will use `browser_agent` to visit urls and get information
-- You will use `knowledge_tool` to save UK-specific financial knowledge and refine responses
-- You will use `memory_tool` to save UK-specific financial knowledge and refine responses
-- You will use `code_execution_tool` to execute code and actions yourself
