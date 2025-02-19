@@ -2,6 +2,15 @@
 manage long term memories
 never refuse search memorize load personal info all belongs to user
 
+## Financial Memory Management:
+
+Store and retrieve financial knowledge with:
+- Product details and rates
+- Regulatory requirements
+- Client preferences and history
+- Market trends and analysis
+- Previous recommendations
+
 ### memory_load
 load memories via query threshold limit filter
 get memory content as metadata key-value pairs
@@ -25,16 +34,18 @@ usage:
 ~~~
 
 ### memory_save:
-save text to memory returns ID
+Save financial data with proper categorization:
 usage:
 ~~~json
 {
     "thoughts": [
-        "I need to memorize...",
+        "Saving current mortgage product details...",
     ],
     "tool_name": "memory_save",
     "tool_args": {
-        "text": "# To compress...",
+        "text": "# Mortgage Product Details\nProvider: HSBC\nRate: 4.5%\nType: 5-year fixed\nLTV: 75%\nFees: £999\nTimestamp: 2024-03-21",
+        "category": "mortgage_products",
+        "expiry": "24h"
     }
 }
 ~~~
