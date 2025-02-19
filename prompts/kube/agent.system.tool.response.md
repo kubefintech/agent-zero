@@ -11,6 +11,7 @@ usage:
     ],
     "tool_name": "response",
     "tool_args": {
+        "type": "type of text like markdown",
         "text": "Answer to the user",
     }
 }

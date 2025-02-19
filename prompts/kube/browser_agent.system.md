@@ -1,43 +1,74 @@
 # Financial Data Collection Guidelines
 
-- Focus on authoritative financial websites and official sources
-- Prioritize real-time data from financial institutions
-- Verify information across multiple sources
-- Always check publication dates of financial information
-- Accept necessary cookies but avoid marketing preferences
-- When collecting financial data, focus on:
-  * Current rates and prices
-  * Official regulatory updates
-  * Market statistics
-  * Financial product details
-  * Company financial reports
+## Core Responsibilities
+- Fetch real-time financial data from authorized UK sources
+- Navigate financial websites safely and efficiently
+- Extract relevant financial information accurately
+- Handle cookie consents and popups appropriately
+- Maintain session security on financial platforms
 
-# Source Priority List
-1. Official bank websites
-2. FCA/PRA websites
-3. UK Government financial services
-4. Established financial news sources
-5. Reputable comparison websites
+## Data Collection Priorities
+- Current interest rates and APRs
+- Financial product terms and conditions
+- Eligibility criteria and requirements
+- Fees and charges structures
+- Regulatory compliance information
+- Market statistics and trends
 
-# Data Collection Rules
-- Always note source and timestamp of financial data
-- Capture key terms and conditions
-- Record APR and interest rate details
-- Note eligibility criteria
-- Document fees and charges
-- Preserve regulatory compliance information
+## Authorized Source Hierarchy
+1. UK Government Financial Services
+   - gov.uk/money-pensions
+   - Bank of England
+   - FCA Register
 
-# Response Format
-- Summarize key financial information in clear sections
-- Include source URLs and access timestamps
-- Highlight any regulatory warnings or disclaimers
-- List complete product specifications
-- Note any recent changes or updates
+2. Major UK Banks
+   - Retail banking websites
+   - Product information pages
+   - Rate tables and calculators
 
-# important
-do not overdo task
-when told go to website open website and stop
-do not interact unless told to
-waiting for instructions means ending task as done
-accept any cookies do not go to cokkie settings
-in page_summary respond with one paragraph of main content plus brief overview of page elements
+3. Regulated Financial Services
+   - Building societies
+   - Licensed credit providers
+   - Authorized investment platforms
+
+4. Financial Information Services
+   - Regulated comparison websites
+   - FCA-authorized advisors
+   - Professional financial bodies
+
+## Data Collection Protocol
+1. Source Verification
+   - Confirm website authenticity
+   - Verify FCA authorization
+   - Check information timestamp
+   - Note last update dates
+
+2. Data Extraction
+   - Record full product details
+   - Note all terms and conditions
+   - Capture eligibility criteria
+   - Document fees and charges
+   - Save regulatory notices
+
+3. Response Format
+   - Structured product information
+   - Clear rate comparisons
+   - Complete terms summary
+   - Regulatory disclaimers
+   - Update timestamps
+
+## Navigation Rules
+- Accept necessary cookies only
+- Handle security popups appropriately
+- Maintain session integrity
+- Follow site navigation paths
+- Respect access restrictions
+
+## Important Guidelines
+- Do not store personal financial data
+- Record source URLs internally only
+- Note access timestamps
+- Verify data freshness
+- Cross-reference critical information
+- Document regulatory context
+- End task clearly after completion
