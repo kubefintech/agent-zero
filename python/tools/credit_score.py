@@ -19,8 +19,30 @@ class CreditScore(Tool):
         self.submit_api_url = "https://staging.platform.kube.money/api/v1/credit-score/submit"
         self.state = {}
         
+        # Extract user_context from the agent's last_user_message if available
+        self.user_context = None
+        if hasattr(agent, 'last_user_message') and agent.last_user_message:
+            message_content = agent.last_user_message.content
+            if isinstance(message_content, dict) and 'user_context' in message_content:
+                # Get the user_context and handle the case where it might be a string
+                user_context_data = message_content['user_context']
+                
+                # If it's a string, try to parse it as JSON
+                if isinstance(user_context_data, str):
+                    try:
+                        self.user_context = json.loads(user_context_data)
+                        PrintStyle.hint(f"Parsed user_context string into dictionary with keys: {', '.join(self.user_context.keys())}")
+                    except json.JSONDecodeError:
+                        PrintStyle.error(f"Failed to parse user_context as JSON: {user_context_data}")
+                        self.user_context = {"raw_string": user_context_data}
+                else:
+                    # It's already a dictionary
+                    self.user_context = user_context_data
+                    PrintStyle.hint(f"Retrieved user_context with keys: {', '.join(self.user_context.keys()) if self.user_context else 'None'}")
+        
         # Log initialization for debugging
         PrintStyle.hint(f"Credit Score Tool initialized. API URL: {self.question_api_url}")
+        PrintStyle.hint(f"User context available: {bool(self.user_context)}")
         
         # Check for existing state
         existing_state = agent.get_data("credit_score_state")
@@ -31,6 +53,33 @@ class CreditScore(Tool):
 
     async def execute(self, **kwargs):
         """Execute the credit score tool based on the current state."""
+        # Check if user context and access token are available
+        if not self.user_context:
+            PrintStyle.error("No user context found. User needs to log in first.")
+            error_msg = "You need to log in first before generating a credit score. Please log in to your account and try again."
+            
+            # Display a prominent warning message
+            await self.agent.hist_add_warning(error_msg)
+            
+            # Return empty response to avoid adding another message
+            return Response(
+                message="",
+                break_loop=False
+            )
+            
+        if not self.user_context.get('access_token'):
+            PrintStyle.error("No access token found in user context. User needs to log in again.")
+            error_msg = "Your session appears to be invalid. Please log in again to generate a credit score."
+            
+            # Display a prominent warning message
+            await self.agent.hist_add_warning(error_msg)
+            
+            # Return empty response to avoid adding another message
+            return Response(
+                message="",
+                break_loop=False
+            )
+            
         # Get conversation state
         conversation_state = self.agent.get_data("credit_score_state") or {}
         
@@ -313,7 +362,14 @@ class CreditScore(Tool):
         """Fetch questions from the API."""
         try:
             PrintStyle.hint(f"Fetching questions from {self.question_api_url}")
-            response = requests.get(self.question_api_url, timeout=10)
+            
+            # Set up headers with bearer token if available
+            headers = {"Content-Type": "application/json"}
+            if self.user_context and 'access_token' in self.user_context:
+                headers["Authorization"] = f"Bearer {self.user_context['access_token']}"
+                PrintStyle.hint("Using access_token from user_context for authorization")
+            
+            response = requests.get(self.question_api_url, headers=headers, timeout=10)
             response.raise_for_status()
             
             # Parse the response
@@ -393,9 +449,6 @@ class CreditScore(Tool):
           "reasoning": "Good income level, moderate debt, stable employment"
         }
         """
-        
-        # Import json here to avoid linter error
-        import json
         
         # Format user responses for the model with cleaned data
         # Extract the actual values, not the JSON objects
@@ -548,10 +601,17 @@ class CreditScore(Tool):
         try:
             PrintStyle.hint(f"Submitting score to {self.submit_api_url}")
             PrintStyle.hint(f"Payload: {json.dumps(payload, indent=2)}")
+            
+            # Set up headers with bearer token if available
+            headers = {"Content-Type": "application/json"}
+            if self.user_context and 'access_token' in self.user_context:
+                headers["Authorization"] = f"Bearer {self.user_context['access_token']}"
+                PrintStyle.hint("Using access_token from user_context for authorization")
+            
             response = requests.post(
                 self.submit_api_url,
                 json=payload,
-                headers={"Content-Type": "application/json"},
+                headers=headers,
                 timeout=10
             )
             try:
@@ -576,4 +636,6 @@ class CreditScore(Tool):
     
     async def after_execution(self, response, **kwargs):
         """Actions to take after execution."""
-        await self.agent.hist_add_tool_result(self.name, response.message) 
+        # Only add tool result if there's a non-empty message
+        if response.message:
+            await self.agent.hist_add_tool_result(self.name, response.message) 
