@@ -1,0 +1,282 @@
+{
+    "data": [
+        {
+            "id": "age",
+            "text": "What is your age?",
+            "type": "number"
+        },
+        {
+            "id": "gender",
+            "text": "What is your gender?",
+            "type": "select",
+            "options": [
+                "Male",
+                "Female",
+                "Others",
+                "I'd rather not say"
+            ]
+        },
+        {
+            "id": "marital_status",
+            "text": "What is your marital status?",
+            "type": "select",
+            "options": [
+                "Married",
+                "Unmarried",
+                "Divorced",
+                "Widowed"
+            ]
+        },
+        {
+            "id": "residence",
+            "text": "What is your residence ownership status?",
+            "type": "select",
+            "options": [
+                "Owned",
+                "Family Owned",
+                "Rental"
+            ]
+        },
+        {
+            "id": "education",
+            "text": "What is your education level?",
+            "type": "select",
+            "options": [
+                "No Education",
+                "Entry level",
+                "Professional Training",
+                "O level",
+                "A level",
+                "Diploma",
+                "Graduate",
+                "Post Graduate",
+                "PhD"
+            ]
+        },
+        {
+            "id": "profession",
+            "text": "What is your profession?",
+            "type": "select",
+            "options": [
+                "Employee",
+                "Businessman"
+            ]
+        },
+        {
+            "id": "company_name",
+            "text": "What is your company name?",
+            "type": "text",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "company_number",
+            "text": "What is your company number?",
+            "type": "text",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "company_type",
+            "text": "What is your company type?",
+            "type": "select",
+            "options": [
+                "Limited liability company",
+                "Sole trader",
+                "Ordinary partnership"
+            ],
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "business_roles",
+            "text": "What are your business roles?",
+            "type": "select",
+            "options": [
+                "Director",
+                "Shareholder",
+                "Director & Shareholder",
+                "None of the above"
+            ],
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "business_size",
+            "text": "What is your business size?",
+            "type": "select",
+            "options": [
+                "Micro enterprises: 1-9 employees",
+                "Small enterprises: 10-49 employees",
+                "Medium-sized enterprises: 50-249 employees",
+                "Large enterprises: 250+ employees"
+            ],
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "business_age",
+            "text": "How old is your business (in years)?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "equity_percentage",
+            "text": "What is your percentage of equity?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "business_operation",
+            "text": "What is your business operation type?",
+            "type": "select",
+            "options": [
+                "Import/Export",
+                "Online",
+                "Domestic sales"
+            ],
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "operational_cost",
+            "text": "What is your operational cost (monthly in £)?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "turnover",
+            "text": "What is your turnover (yearly in £)?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "gross_profit",
+            "text": "What is your gross profit (monthly in £)?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Businessman"
+            }
+        },
+        {
+            "id": "company_name",
+            "text": "What is your company name?",
+            "type": "text",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Employee"
+            }
+        },
+        {
+            "id": "employment_type",
+            "text": "What is your employment type?",
+            "type": "select",
+            "options": [
+                "Permanent",
+                "Provisional",
+                "Contractual/Project-based",
+                "Internship"
+            ],
+            "dependency": {
+                "question_id": "profession",
+                "value": "Employee"
+            }
+        },
+        {
+            "id": "employment_history",
+            "text": "How many years of employment history do you have?",
+            "type": "number",
+            "dependency": {
+                "question_id": "profession",
+                "value": "Employee"
+            }
+        },
+        {
+            "id": "total_income",
+            "text": "What is your total income (monthly in £)?",
+            "type": "number"
+        },
+        {
+            "id": "collateral",
+            "text": "Do you have collateral (Mortgage)?",
+            "type": "select",
+            "options": [
+                "Yes",
+                "No"
+            ]
+        },
+        {
+            "id": "outstanding_debts",
+            "text": "Do you have outstanding debts?",
+            "type": "select",
+            "options": [
+                "Yes",
+                "No"
+            ]
+        },
+        {
+            "id": "loan_amount",
+            "text": "What is your loan amount (in £)?",
+            "type": "number",
+            "dependency": {
+                "question_id": "outstanding_debts",
+                "value": "Yes"
+            }
+        },
+        {
+            "id": "loan_term",
+            "text": "What is your loan term?",
+            "type": "select",
+            "options": [
+                "Short term",
+                "Long term",
+                "Short and Long term"
+            ],
+            "dependency": {
+                "question_id": "outstanding_debts",
+                "value": "Yes"
+            }
+        },
+        {
+            "id": "loan_purpose",
+            "text": "What is your loan purpose?",
+            "type": "select",
+            "options": [
+                "Business purpose",
+                "Loan repayment",
+                "Family expenses",
+                "Study loan",
+                "Others"
+            ],
+            "dependency": {
+                "question_id": "outstanding_debts",
+                "value": "Yes"
+            }
+        }
+    ]
+}
