@@ -188,6 +188,7 @@ class AgentConfig:
 class UserMessage:
     message: str
     attachments: list[str]
+    user_context: Optional[Dict[str, Any]] = None
 
 
 class LoopData:
@@ -443,19 +444,29 @@ class Agent:
     ):
         self.history.new_topic()  # user message starts a new topic in history
 
-        # load message template based on intervention
+        # Prepare template variables
+        template_vars = {
+            "message": message.message, 
+            "attachments": message.attachments
+        }
+        
+        # Select template based on intervention and user_context
         if intervention:
-            content = self.parse_prompt(
-                "fw.intervention.md",
-                message=message.message,
-                attachments=message.attachments,
-            )
+            if message.user_context:
+                template_file = "fw.intervention_with_context.md"
+                template_vars["user_context"] = message.user_context
+            else:
+                template_file = "fw.intervention.md"
         else:
-            content = self.parse_prompt(
-                "fw.user_message.md",
-                message=message.message,
-                attachments=message.attachments,
-            )
+            # Use different template based on whether user_context exists
+            if message.user_context:
+                template_file = "fw.user_message_with_context.md"
+                template_vars["user_context"] = message.user_context
+            else:
+                template_file = "fw.user_message.md"
+
+        # Parse the template
+        content = self.parse_prompt(template_file, **template_vars)
 
         # remove empty attachments from template
         if (

@@ -7,6 +7,7 @@ import os
 from werkzeug.utils import secure_filename
 from python.helpers.defer import DeferredTask
 from python.helpers.print_style import PrintStyle
+import json
 
 
 class Message(ApiHandler):
@@ -28,6 +29,14 @@ class Message(ApiHandler):
             text = request.form.get("text", "")
             ctxid = request.form.get("context", "")
             message_id = request.form.get("message_id", None)
+            user_context_json = request.form.get("user_context", None)
+            user_context = None
+            if user_context_json:
+                try:
+                    user_context = json.loads(user_context_json)
+                except Exception as e:
+                    print(f"Error parsing user_context JSON: {e}")
+            
             attachments = request.files.getlist("attachments")
             attachment_paths = []
 
@@ -49,6 +58,7 @@ class Message(ApiHandler):
             text = input_data.get("text", "")
             ctxid = input_data.get("context", "")
             message_id = input_data.get("message_id", None)
+            user_context = input_data.get("user_context", None)
             attachment_paths = []
 
         # Now process the message
@@ -76,14 +86,16 @@ class Message(ApiHandler):
             PrintStyle(font_color="white", padding=False).print("Attachments:")
             for filename in attachment_filenames:
                 PrintStyle(font_color="white", padding=False).print(f"- {filename}")
+        if user_context:
+            PrintStyle(font_color="white", padding=False).print("User context provided")
 
         # Log the message with message_id and attachments
         context.log.log(
             type="user",
             heading="User message",
             content=message,
-            kvps={"attachments": attachment_filenames},
+            kvps={"attachments": attachment_filenames, "user_context": user_context},
             id=message_id,
         )
 
-        return context.communicate(UserMessage(message, attachment_paths)), context
+        return context.communicate(UserMessage(message, attachment_paths, user_context)), context
