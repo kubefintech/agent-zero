@@ -14,6 +14,4 @@
 
 {{ include './agent.system.tool.input.md' }}
 
-{{ include './agent.system.tool.browser.md' }}
-
 {{ include './agent.system.tool.credit_score.md' }}
