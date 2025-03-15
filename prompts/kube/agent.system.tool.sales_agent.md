@@ -1,16 +1,41 @@
 ### sales_agent:
-Handles sales agent requests and status checks. Allows users to submit requests to become a sales agent and check their request status. triggers when the user wants to submit a sales agent request or check their request status.
+Handles sales agent requests and status checks. Allows users to submit requests to become a sales agent and check their request status.
 
 IMPORTANT GUIDELINES:
 - Use this tool to submit new sales agent requests or check status of existing requests
-- For submitting requests, both bank_name and position are required
+- For new requests, the tool will ask for information in sequence:
+  1. First asks for the bank name
+  2. Then asks for the position
 - For checking status, no additional parameters are needed
 - The tool handles all API communication and error handling
 
-Usage for submitting a request:
+Usage for starting a new request:
 ```json
 {
-  "thoughts": ["The user wants to submit a sales agent request."],
+  "thoughts": ["The user wants to submit a sales agent request. I'll start by asking for the bank name."],
+  "tool_name": "sales_agent",
+  "tool_args": {
+    "action": "request"
+  }
+}
+```
+
+When user provides bank name:
+```json
+{
+  "thoughts": ["User provided the bank name, now asking for position."],
+  "tool_name": "sales_agent",
+  "tool_args": {
+    "action": "request",
+    "bank_name": "Example Bank"
+  }
+}
+```
+
+When user provides position:
+```json
+{
+  "thoughts": ["User provided both bank name and position, submitting the request."],
   "tool_name": "sales_agent",
   "tool_args": {
     "action": "request",
@@ -34,8 +59,11 @@ Usage for checking status:
 Process Flow:
 1. For new requests:
    - Call sales_agent tool with action="request"
-   - Provide bank_name and position
-   - Tool submits request to API
+   - Tool asks for bank name
+   - User provides bank name
+   - Tool asks for position
+   - User provides position
+   - Tool submits complete request to API
    - Returns success/failure message
 
 2. For status checks:
