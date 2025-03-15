@@ -64,13 +64,21 @@ class SalesAgent(Tool):
             PrintStyle.hint("Using access_token from user_context for authorization")
 
             if action == "request":
-                if not bank_name or not position:
+                # If bank_name is not provided, ask for it
+                if not bank_name:
                     return Response(
-                        message="Both bank_name and position are required for submitting a request.",
-                        break_loop=True
+                        message="Please provide the name of the bank you work.",
+                        break_loop=False
                     )
                 
-                # Submit request
+                # If position is not provided but bank_name is, ask for position
+                if bank_name and not position:
+                    return Response(
+                        message="Please specify the position at " + bank_name + ".",
+                        break_loop=False
+                    )
+                
+                # If we have both bank_name and position, submit the request
                 response = requests.post(
                     self.request_api_url,
                     json={
@@ -107,9 +115,10 @@ class SalesAgent(Tool):
                         break_loop=True
                     )
             else:
+                # If no action is specified, start the request process
                 return Response(
-                    message="Invalid action. Please use 'request' to submit a new request or 'status' to check status.",
-                    break_loop=True
+                    message="Please provide the name of the bank you want to be a sales agent for.",
+                    break_loop=False
                 )
                 
         except Exception as e:
