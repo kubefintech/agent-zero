@@ -15,3 +15,5 @@
 {{ include './agent.system.tool.input.md' }}
 
 {{ include './agent.system.tool.credit_score.md' }}
+
+{{ include './agent.system.tool.sales_agent.md' }}
